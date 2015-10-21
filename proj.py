@@ -28,7 +28,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	
 	fileLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension + "/msh/"
 	content = sorted(os.listdir(fileLocation))
-	print 2, "Files in msh-directory: " + content
+	print 2, "Files in msh-directory: " + str(content)
 	while fileName not in content:
 		print "moving airfoil not ready"
 		content = sorted(os.listdir(fileLocation))
