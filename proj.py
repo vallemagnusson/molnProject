@@ -30,7 +30,8 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	content = sorted(os.listdir(fileLocation))
 	print 2, "Files in msh-directory: " + str(content)
 	while fileName not in content:
-		print "moving airfoil not ready"
+		print "Making msh not ready"
+		time.sleep(0.5)
 		content = sorted(os.listdir(fileLocation))
 	#!!!!!!!!!!!!!fileLocation = "/home/ubuntu/naca_airfoil/msh/"
 	#!!!!!!!!!!!!!content = sorted(os.listdir(fileLocation))
