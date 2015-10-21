@@ -19,13 +19,19 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	fileNameWithoutExtension = os.path.splitext(fileName)[0]
 	xmlFileName = fileNameWithoutExtension + ".xml"
 	subprocess.call(["mkdir", fileNameWithoutExtension])
-	print "Started to process file: " + str(fileName)
+	print 1, "Started to process file: " + str(fileName)
 	subprocess.call(["cp", "-a", "run.sh", fileNameWithoutExtension])
 	subprocess.call(["cp", "-a", "naca2gmsh_geo.py", fileNameWithoutExtension])
 	subprocess.call(["mkdir", "msh"], cwd=fileNameWithoutExtension+"/")
 	subprocess.call(["mkdir", "geo"], cwd=fileNameWithoutExtension+"/")
 	subprocess.Popen(["sudo", "./run.sh", str(angle), str(angle), "1", n_nodes, n_levels], cwd=fileNameWithoutExtension+"/")
 	
+	fileLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension + "/msh/"
+	content = sorted(os.listdir(fileLocation))
+	print 2, "Files in msh-directory: " + content
+	while fileName not in content:
+		print "moving airfoil not ready"
+		content = sorted(os.listdir(fileLocation))
 	#!!!!!!!!!!!!!fileLocation = "/home/ubuntu/naca_airfoil/msh/"
 	#!!!!!!!!!!!!!content = sorted(os.listdir(fileLocation))
 	
