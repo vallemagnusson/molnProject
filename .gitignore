@@ -1,0 +1,7 @@
+*.yml
+*.key
+*.key.pub
+ACC-Course-openrc.sh
+workerSetup.py
+userdatafiles
+setUpServer.py

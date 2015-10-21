@@ -1,0 +1,27 @@
+ <html>
+    <head>
+        <title>Handle POST requests with Flask</title>
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <div id="container">
+            <div class="title">
+                <h1>POST request with Flask</h1>
+            </div>
+            <div id="content">
+                {{angle_start}}<br>
+                {{angle_stop}}<br>
+                {{n_angles}}<br>
+                {{n_nodes}}<br>
+                {{n_levels}}<br>
+                <div class="title">
+                    <h1>Input to airfoil</h1>
+                </div>
+                {{num_samples}}<br>
+                {{visc}}<br>
+                {{speed}}<br>
+                {{T}}<br>
+            </div>
+        </div>
+    </body>
+</html>
