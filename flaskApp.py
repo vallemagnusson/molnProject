@@ -37,13 +37,13 @@ def runsh():
 	
 	angles = []
 	for i in range(0, int(n_angles)):
-		print 1, i
 		angle = 0
 		angle = (int(angle_start) + anglediff * i)
+		print 1, angle
 		#if in_db("r" + n_levels + "a" + str(angle) + "n" + n_nodes + "N" + num_samples + "v" + visc + "s" + speed + "T" + T + ".msh") == False :
 			#print "Ja en vinkel!"
 		angles.append(angle)
-	
+	print angles
 	if len(angles) != 0:
 		print "Nu skickas allt ivag :)"
 		response = group(convertFile.s(angle, n_nodes, n_levels, num_samples, visc, speed, T) for angle in angles)
