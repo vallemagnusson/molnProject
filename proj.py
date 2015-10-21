@@ -17,47 +17,24 @@ app = Celery('proj', backend='amqp', broker='amqp://mava:orkarinte@130.238.29.12
 def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	fileName = "r" + n_levels + "a" + str(angle) + "n" + n_nodes + ".msh"
 	fileNameWithoutExtension = os.path.splitext(fileName)[0]
+	xmlFileName = fileNameWithoutExtension + ".xml"
 	subprocess.call(["mkdir", fileNameWithoutExtension])
 	print "Started to process file: " + str(fileName)
 	subprocess.call(["cp", "-a", "run.sh", fileNameWithoutExtension])
 	subprocess.call(["cp", "-a", "naca2gmsh_geo.py", fileNameWithoutExtension])
 	subprocess.call(["mkdir", "msh"], cwd=fileNameWithoutExtension+"/")
 	subprocess.call(["mkdir", "geo"], cwd=fileNameWithoutExtension+"/")
-
 	subprocess.Popen(["sudo", "./run.sh", str(angle), str(angle), "1", n_nodes, n_levels], cwd=fileNameWithoutExtension+"/")
-
-	#runCheck = subprocess.check_call(["sudo", "./run.sh", str(angle), str(angle), "1", n_nodes, n_levels], cwd=fileNameWithoutExtension + "/")
-	#while runCheck != 0:
-	#	print "run.sh not OK!!!!!"
-	#	runCheck = subprocess.check_call(["./run.sh", str(angle), str(angle), "1", n_nodes, n_levels])
-
-	#appLocation = app.root_path
-	#for i in content:
-	#	if i == "r" + n_levels + "a" + angle + "n" + n_nodes + ".msh":
-	#		fileName = content[i]
-	##########################################
-	##### Conver file from *msh to *.xml #####
-	##########################################
-	#newFile = open(fileName, "w")
-	#newFile.write(mshFile)
-	#newFile = open(fileName, "r")
-	#newFile.close()
+	
 	#!!!!!!!!!!!!!fileLocation = "/home/ubuntu/naca_airfoil/msh/"
 	#!!!!!!!!!!!!!content = sorted(os.listdir(fileLocation))
-	#while fileName not in content:
-	#	print "run.sh not ready"
-	#	content = sorted(os.listdir(fileLocation))
-
 	
-	#!!!!!!!!!!!!!xmlFileName = fileNameWithoutExtension + ".xml"
 	#!!!!!!!!!!!!!print fileNameWithoutExtension
-	#!!!!!!!!!!!!!subprocess.call(["dolfin-convert", "msh/"+fileName, xmlFileName])
+	
+	subprocess.call(["dolfin-convert", "msh/"+fileName, xmlFileName])
 
 	#!!!!!!!!!!!!!fileLocation = "/home/ubuntu/naca_airfoil/"
 	#!!!!!!!!!!!!!content = sorted(os.listdir(fileLocation))
-	#while xmlFileName not in content:
-	#	print "dolfin-convert not ready"
-	#	content = sorted(os.listdir(fileLocation))
 	##########################################
 	########## Copy airfoil to dir ###########
 	##########################################
