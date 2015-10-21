@@ -57,7 +57,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#while "results" not in content:
 	#	print "result form airfoil not ready"
 	#	content = sorted(os.listdir(fileLocation))
-	#!!!!!!!!!!!!!resultLists = readFile("/home/ubuntu/naca_airfoil/" +fileNameWithoutExtension+"/results/drag_ligt.m")
+	resultLists = readFile("/home/ubuntu/molnProject/" +fileNameWithoutExtension+"/results/drag_ligt.m")
 	#!!!!!!!!!!!!!os.system("rm -rf " + fileNameWithoutExtension + "*")
 	#!!!!!!!!!!!!!os.system("rm -rf  msh/*")
 	#!!!!!!!!!!!!!os.system("rm -rf  geo/*")
