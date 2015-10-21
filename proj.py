@@ -30,8 +30,8 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#!!!!!!!!!!!!!content = sorted(os.listdir(fileLocation))
 	
 	#!!!!!!!!!!!!!print fileNameWithoutExtension
-	print fileNameWithoutExtension + "/" + "msh/" + fileName
-	subprocess.call(["dolfin-convert", fileNameWithoutExtension+"/msh/"+fileName, xmlFileName])
+	#print fileNameWithoutExtension + "/" + "msh/" + fileName
+	subprocess.call(["dolfin-convert", "msh/"+fileName, xmlFileName], cwd=fileNameWithoutExtension+"/")
 
 	#!!!!!!!!!!!!!fileLocation = "/home/ubuntu/naca_airfoil/"
 	#!!!!!!!!!!!!!content = sorted(os.listdir(fileLocation))
