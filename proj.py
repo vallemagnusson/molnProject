@@ -19,8 +19,10 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	fileNameWithoutExtension = os.path.splitext(fileName)[0]
 	subprocess.call(["mkdir", fileNameWithoutExtension])
 	print "Started to process file: " + str(fileName)
+	subprocess.call(["cp", "-a", "run.sh", fileNameWithoutExtension])
 
-	subprocess.Popen(["sudo", "./run.sh", str(angle), str(angle), "1", n_nodes, n_levels])
+
+	subprocess.Popen(["sudo", "./run.sh", str(angle), str(angle), "1", n_nodes, n_levels], cwd=fileNameWithoutExtension+"/")
 
 	#runCheck = subprocess.check_call(["sudo", "./run.sh", str(angle), str(angle), "1", n_nodes, n_levels], cwd=fileNameWithoutExtension + "/")
 	#while runCheck != 0:
