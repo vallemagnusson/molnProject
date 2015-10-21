@@ -40,9 +40,9 @@ def runsh():
 		print 1, i
 		angle = 0
 		angle = (int(angle_start) + anglediff * i)
-		if in_db("r" + n_levels + "a" + str(angle) + "n" + n_nodes + "N" + num_samples + "v" + visc + "s" + speed + "T" + T + ".msh") == False :
-			print "Ja en vinkel!"
-			angles.append(angle)
+		#if in_db("r" + n_levels + "a" + str(angle) + "n" + n_nodes + "N" + num_samples + "v" + visc + "s" + speed + "T" + T + ".msh") == False :
+			#print "Ja en vinkel!"
+		angles.append(angle)
 	
 	if len(angles) != 0:
 		print "Nu skickas allt ivag :)"
