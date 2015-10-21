@@ -7,8 +7,8 @@ import os
 import time
 from proj import convertFile
 import subprocess
-from plot_result import plot_file
-from save_to_db import to_db, in_db
+#from plot_result import plot_file
+#from save_to_db import to_db, in_db
 
 app = Flask(__name__, template_folder="/home/ubuntu/molnProject")
 
