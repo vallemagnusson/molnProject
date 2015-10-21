@@ -20,6 +20,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	subprocess.call(["mkdir", fileNameWithoutExtension])
 	print "Started to process file: " + str(fileName)
 	subprocess.call(["cp", "-a", "run.sh", fileNameWithoutExtension])
+	subprocess.call(["cp", "-a", "naca2gmsh_geo.py", fileNameWithoutExtension])
 	subprocess.call(["mkdir", "msh"], cwd=fileNameWithoutExtension+"/")
 	subprocess.call(["mkdir", "geo"], cwd=fileNameWithoutExtension+"/")
 
