@@ -10,7 +10,7 @@ import subprocess
 from plot_result import plot_file
 from save_to_db import to_db, in_db
 
-app = Flask(__name__, template_folder="/home/ubuntu/naca_airfoil")
+app = Flask(__name__, template_folder="/home/ubuntu/molnProject")
 
 @app.route('/')
 def form():
