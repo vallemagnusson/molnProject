@@ -1,5 +1,5 @@
 ## Broker settings.
-BROKER_URL = 'amqp://mava:orkarint@130.238.29.120:5672/app2'
+BROKER_URL = 'amqp://mava:orkarinte@130.238.29.120:5672/app2'
 
 # List of modules to import when celery starts.
 CELERY_IMPORTS = ('proj', )
