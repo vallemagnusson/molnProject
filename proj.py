@@ -14,7 +14,7 @@ import subprocess
 
 celery.config_from_object('celeryconfig')
 
-app = Celery('proj', backend='amqp', broker='amqp://mava:orkarinte@130.238.29.120:5672/app2')
+app = Celery()#'proj', backend='amqp', broker='amqp://mava:orkarinte@130.238.29.120:5672/app2')
 
 @app.task
 def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
