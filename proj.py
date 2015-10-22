@@ -6,10 +6,13 @@ import time
 import sys
 import time
 import shutil
+import celery
 from celery import Celery
 from collections import Counter
 import urllib2
 import subprocess
+
+celery.config_from_object('celeryconfig')
 
 app = Celery('proj', backend='amqp', broker='amqp://mava:orkarinte@130.238.29.120:5672/app2')
 
