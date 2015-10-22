@@ -12,12 +12,13 @@ from collections import Counter
 import urllib2
 import subprocess
 
+#celery.config_from_object('celeryconfig')
+celery = Celery('proj')
 celery.config_from_object('celeryconfig')
 
 #app = Celery()#'proj', backend='amqp', broker='amqp://mava:orkarinte@130.238.29.120:5672/app2')
-from celery import celery
 
-@celery.task
+@app.task
 def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	fileName = "r" + n_levels + "a" + str(angle) + "n" + n_nodes + ".msh"
 	fileNameWithoutExtension = os.path.splitext(fileName)[0]
@@ -68,7 +69,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#!!!!!!!!!!!!!return (fileNameWithoutExtension+"N"+num+"v"+visc_s+"s"+speed_s+"T"+T_s+".msh", resultLists)
 	return ("hej",[[],[],[]])
 	
-@celery.task
+@app.task
 def readFile(fileName):
 	theFile = open(fileName, "r").read()
 	timeColumn = []
