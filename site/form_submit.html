@@ -11,28 +11,28 @@
            <div id="content">
                <form method="post" action="{{ url_for('runsh') }}">
                    <label for="angle_start">Please enter angle_start:</label>
-                   <input type="text" name="angle_start" /><br />
+                   <input type="text" name="angle_start" placeholder='0' /><br />
                    <label for="angle_stop">Please enter angle_stop:</label>
-                   <input type="text" name="angle_stop" /><br />
+                   <input type="text" name="angle_stop" placeholder='10' /><br />
                    <label for="n_angles">Please enter n_angles:</label>
-                   <input type="text" name="n_angles" /><br />
+                   <input type="text" name="n_angles" placeholder='10' /><br />
                    <label for="n_nodes">Please enter n_nodes:</label>
-                   <input type="text" name="n_nodes" /><br />
+                   <input type="text" name="n_nodes" placeholder='10' /><br />
                    <label for="n_levels">Please enter n_levels:</label>
-                   <input type="text" name="n_levels" /><br />
+                   <input type="text" name="n_levels" placeholder='0' /><br />
 
-                     <div class="title">
-                         <h1>Input to airfoil</h1>
-                     </div>
+                    <div class="title">
+                       <h1>Input to airfoil</h1>
+                    </div>
 
                    <label for="num_samples">Please enter num_samples:</label>
-                   <input type="text" name="num_samples" /><br />
+                   <input type="text" name="num_samples" placeholder='10' /><br />
                    <label for="visc">Please enter visc:</label>
-                   <input type="text" name="visc" /><br />
+                   <input type="text" name="visc" placeholder='0.0001' /><br />
                    <label for="speed">Please enter speed:</label>
-                   <input type="text" name="speed" /><br />
+                   <input type="text" name="speed" placeholder='10' /><br />
                    <label for="T">Please enter T:</label>
-                   <input type="text" name="T" /><br />
+                   <input type="text" name="T" placeholder='0.1' /><br />
                    <input type="submit" />
                </form>
            </div>
