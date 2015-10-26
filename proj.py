@@ -11,10 +11,20 @@ from celery import Celery
 from collections import Counter
 import urllib2
 import subprocess
+from plot_result import plot_file
 
 #celery.config_from_object('celeryconfig')
 app = Celery('proj')
 app.config_from_object('celeryconfig')
+config = {'username':os.environ['OS_USERNAME'], 
+          'api_key':os.environ['OS_PASSWORD'],
+          'project_id':os.environ['OS_TENANT_NAME'],
+          'auth_url':os.environ['OS_AUTH_URL']}
+
+conn = swiftclient.client.Connection(auth_version=2, **config)
+
+bucket_name = "MavaPictureConatiner"
+
 
 #app = Celery()#'proj', backend='amqp', broker='amqp://mava:orkarinte@130.238.29.120:5672/app2')
 
@@ -67,6 +77,8 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#!!!!!!!!!!!!!os.system("rm -rf  msh/*")
 	#!!!!!!!!!!!!!os.system("rm -rf  geo/*")
 	#!!!!!!!!!!!!!return (fileNameWithoutExtension+"N"+num+"v"+visc_s+"s"+speed_s+"T"+T_s+".msh", resultLists)
+	plot_file(fileName, data)
+	object_id = conn.put_object(bucket_name, fileNameWithoutExtension+".png")
 	return ("hej",[[],[],[]])
 	
 @app.task
