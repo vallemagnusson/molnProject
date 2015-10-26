@@ -5,7 +5,7 @@ myip = urllib2.urlopen("http://myip.dnsdynamic.org/").read()
 
 print myip
 with open("/etc/environment", "a") as outfile:
-        outfile.write("export FLOATING_IP="+myip)
+        outfile.write("export FLOATING_IP="+myip"\n")
 
 
 
