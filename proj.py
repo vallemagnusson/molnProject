@@ -12,6 +12,7 @@ from collections import Counter
 import urllib2
 import subprocess
 from plot_result import plot_file
+import swiftclient.client
 
 #celery.config_from_object('celeryconfig')
 app = Celery('proj')
