@@ -44,7 +44,7 @@ def plot_file(filename, data):
 	plt.xlabel('Time')
 	plt.ylabel('Force')
 	plt.title(filename)
-	plt.yscale('log')
+	#plt.yscale('log')
 	plt.savefig(os.path.splitext(filename)[0] + '.png')
 	#save("signal", ext="png", close=False, verbose=True)
 	#image = open(os.path.splitext(filename)[0] + '.png', "w")
