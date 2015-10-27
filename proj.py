@@ -75,7 +75,8 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#!!!!!!!!!!!!!os.system("rm -rf  geo/*")
 	#!!!!!!!!!!!!!return (fileNameWithoutExtension+"N"+num+"v"+visc_s+"s"+speed_s+"T"+T_s+".msh", resultLists)
 	plot_file(fileName, resultLists)
-	object_id = conn.put_object(bucket_name, fileNameWithoutExtension+".png", fileNameWithoutExtension+".png")
+	pictureFile = open(fileNameWithoutExtension+".png", "r")
+	object_id = conn.put_object(bucket_name, fileNameWithoutExtension+".png", pictureFile)
 	return ("hej",[[],[],[]])
 	
 @app.task
