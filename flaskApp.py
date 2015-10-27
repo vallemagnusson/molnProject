@@ -7,10 +7,21 @@ import os
 import time
 from proj import convertFile
 import subprocess
+import swiftclient.client
 #from plot_result import plot_file
 #from save_to_db import to_db, in_db
 
 app = Flask(__name__, template_folder="/home/ubuntu/molnProject")
+
+config = {'user':os.environ['OS_USERNAME'], 
+          'key':os.environ['OS_PASSWORD'],
+          'tenant_name':os.environ['OS_TENANT_NAME'],
+          'authurl':os.environ['OS_AUTH_URL']}
+
+conn = swiftclient.client.Connection(auth_version=2, **config)
+
+bucket_name = "MavaPictureContainer"
+dataBaseName = "pictureDatabase"
 
 @app.route('/')
 def form():
@@ -31,56 +42,37 @@ def runsh():
 	###########################
 	##### Check if exists #####
 	###########################
-	#anglediff=$((($angle_stop-$angle_start)/$n_angles))
-
 	anglediff = (int(angle_stop) - int(angle_start)) / int(n_angles)
 	
 	angles = []
+	conn.get_object(bucket_name, dataBaseName)
 	for i in range(0, int(n_angles)):
+
 		angle = 0
 		angle = (int(angle_start) + anglediff * i)
 		print 1, angle
-		#if in_db("r" + n_levels + "a" + str(angle) + "n" + n_nodes + "N" + num_samples + "v" + visc + "s" + speed + "T" + T + ".msh") == False :
+		if in_db("r" + n_levels + "a" + str(angle) + "n" + n_nodes + "Num" + num_samples + "Visc" + visc + "Speed" + speed + "T" + T) == False :
 			#print "Ja en vinkel!"
-		angles.append(angle)
+			angles.append(angle)
 	print angles
 	if len(angles) != 0:
 		print "Nu skickas allt ivag :)"
-		response = group(convertFile.s(angle, n_nodes, n_levels, num_samples, visc, speed, T) for angle in angles)
-		result = response.apply_async()
-		result.get()
-
-
-		########################
-		##### Create *.msh #####
-		########################
-		#time_1 = time.time()
-		#subprocess.call(["./run.sh", angle_start, angle_stop, n_angles, n_nodes, n_levels])
-		#time_2 = time.time()
-		#print 2, time_2 - time_1
-		#############################################
-		##### Convert *.msh to *.xml + lite mer #####
-		#############################################
-		#appLocation = app.root_path
-		#fileLocation = appLocation + "/msh/"
-		#content = sorted(os.listdir(fileLocation))
-		#response = group(convertFile.s(fileName, open(fileLocation+fileName, "r").read()) for fileName in content)
-		#result = response.apply_async()
-		#result.get()
-		#time_3 = time.time()
-		#print 3, time_3 - time_2
-
+		for level in range(int(n_levels)):
+			response = group(convertFile.s(angle, n_nodes, levels, num_samples, visc, speed, T) for angle in angles)
+			result = response.apply_async()
+			result.get()
 
 		####################################
-		#for t in result.get():
-		#	(fileNamePlot, data) = t
-		#	plot_file(fileNamePlot, data)
-		#	to_db(fileNamePlot, "")
+		for t in result.get():
+			fileNamePlot = t
+			#plot_file(fileNamePlot, data)
+			to_db(fileNamePlot, "")
+			db = open(dataBaseName, "r")
+		conn.put_object(bucket_name, dataBaseName, db)
 		#os.system("rm -rf  msh/*")
 		#os.system("rm -rf  geo/*")
 		#os.system("mv *.png pictures/")
 		#####################################
-
 		
 		##subprocess.call(["mv", "*.png", "pictures/"])
 
