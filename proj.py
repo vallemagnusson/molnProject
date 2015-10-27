@@ -53,7 +53,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 		time.sleep(0.5)
 		content = sorted(os.listdir(fileLocation))
 
-	subprocess.call(["dolfin-convert", "msh/"+fileName, xmlFileName], cwd=fileNameWithoutExtension+"/")
+	subprocess.call(["sudo","dolfin-convert", "msh/"+fileName, xmlFileName], cwd=fileNameWithoutExtension+"/")
 
 	##########################################
 	########## Run airfoil on file ###########
