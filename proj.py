@@ -24,7 +24,7 @@ config = {'user':os.environ['OS_USERNAME'],
 
 conn = swiftclient.client.Connection(auth_version=2, **config)
 
-bucket_name = "MavaPictureConatiner"
+bucket_name = "MavaPictureContainer"
 
 
 #app = Celery()#'proj', backend='amqp', broker='amqp://mava:orkarinte@130.238.29.120:5672/app2')
@@ -75,7 +75,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#!!!!!!!!!!!!!os.system("rm -rf  geo/*")
 	#!!!!!!!!!!!!!return (fileNameWithoutExtension+"N"+num+"v"+visc_s+"s"+speed_s+"T"+T_s+".msh", resultLists)
 	plot_file(fileName, resultLists)
-	pictureFile = open(fileNameWithoutExtension+".png", "r")
+	pictureFile = open( fileNameWithoutExtension + "/" + fileNameWithoutExtension+".png", "r")
 	object_id = conn.put_object(bucket_name, fileNameWithoutExtension+".png", pictureFile)
 	return ("hej",[[],[],[]])
 	
