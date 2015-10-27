@@ -9,7 +9,7 @@ from proj import convertFile
 import subprocess
 import swiftclient.client
 #from plot_result import plot_file
-#from save_to_db import to_db, in_db
+from save_to_db import to_db, in_db
 
 app = Flask(__name__, template_folder="/home/ubuntu/molnProject")
 
