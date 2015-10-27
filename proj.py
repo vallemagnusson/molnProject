@@ -76,7 +76,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#!!!!!!!!!!!!!return (fileNameWithoutExtension+"N"+num+"v"+visc_s+"s"+speed_s+"T"+T_s+".msh", resultLists)
 	pictureName = fileNameWithoutExtension + "Num" + num + "Visc" + visc_s + "Speed" + speed_s + "T" + T_s + ".png"
 	dbName = fileNameWithoutExtension + "Num" + num + "Visc" + visc_s + "Speed" + speed_s + "T" + T_s
-	
+	print resultLists
 	plot_file(pictureName, resultLists)
 	pictureFile = open(pictureName, "r")
 	object_id = conn.put_object(bucket_name, pictureName, pictureFile)
