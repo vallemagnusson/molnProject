@@ -35,6 +35,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	fileNameWithoutExtension = os.path.splitext(fileName)[0]
 	xmlFileName = fileNameWithoutExtension + ".xml"
 	subprocess.call(["mkdir", fileNameWithoutExtension])
+	subprocess.call(['chmod', '-R', '777', fileNameWithoutExtension])
 	print 1, "Started to process file: " + str(fileName)
 	subprocess.call(["cp", "-a", "run.sh", fileNameWithoutExtension])
 	subprocess.call(["cp", "-a", "naca2gmsh_geo.py", fileNameWithoutExtension])
@@ -50,15 +51,9 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 		print "Making msh not ready"
 		time.sleep(0.5)
 		content = sorted(os.listdir(fileLocation))
-	#!!!!!!!!!!!!!fileLocation = "/home/ubuntu/naca_airfoil/msh/"
-	#!!!!!!!!!!!!!content = sorted(os.listdir(fileLocation))
-	
-	#!!!!!!!!!!!!!print fileNameWithoutExtension
-	#print fileNameWithoutExtension + "/" + "msh/" + fileName
+
 	subprocess.call(["dolfin-convert", "msh/"+fileName, xmlFileName], cwd=fileNameWithoutExtension+"/")
 
-	#!!!!!!!!!!!!!fileLocation = "/home/ubuntu/naca_airfoil/"
-	#!!!!!!!!!!!!!content = sorted(os.listdir(fileLocation))
 	##########################################
 	########## Run airfoil on file ###########
 	##########################################
