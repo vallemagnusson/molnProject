@@ -42,6 +42,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	subprocess.call(["cp", "-a", "airfoil", fileNameWithoutExtension])
 	subprocess.call(["mkdir", "msh"], cwd=fileNameWithoutExtension+"/")
 	subprocess.call(["mkdir", "geo"], cwd=fileNameWithoutExtension+"/")
+	subprocess.call(['chmod', '-R', '777', fileNameWithoutExtension+"/msh"])
 	subprocess.Popen(["sudo", "./run.sh", str(angle), str(angle), "1", n_nodes, n_levels], cwd=fileNameWithoutExtension+"/")
 	
 	fileLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension + "/msh/"
