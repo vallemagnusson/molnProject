@@ -17,10 +17,10 @@ import swiftclient.client
 #celery.config_from_object('celeryconfig')
 app = Celery('proj')
 app.config_from_object('celeryconfig')
-config = {'username':os.environ['OS_USERNAME'], 
-          'api_key':os.environ['OS_PASSWORD'],
-          'project_id':os.environ['OS_TENANT_NAME'],
-          'auth_url':os.environ['OS_AUTH_URL']}
+config = {'user':os.environ['OS_USERNAME'], 
+          'key':os.environ['OS_PASSWORD'],
+          'tenant_name':os.environ['OS_TENANT_NAME'],
+          'authurl':os.environ['OS_AUTH_URL']}
 
 conn = swiftclient.client.Connection(auth_version=2, **config)
 
