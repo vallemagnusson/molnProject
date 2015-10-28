@@ -49,27 +49,29 @@ def runsh():
 	dbFile = open(dataBaseName, "w")
 	dbFile.write(fileContent)
 	dbFile.close()
+
+	############# Måste göras om.... #########################
 	for i in range(0, int(n_angles)):
 
 		angle = 0
 		angle = (int(angle_start) + anglediff * i)
 		print 1, angle
-		if in_db("r" + n_levels + "a" + str(angle) + "n" + n_nodes + "Num" + num_samples + "Visc" + visc + "Speed" + speed + "T" + T) == False :
-			print "Ja en vinkel!"
-			angles.append(angle)
+		for level in range(int(n_levels)+1):
+			if in_db("r" + level + "a" + str(angle) + "n" + n_nodes + "Num" + num_samples + "Visc" + visc + "Speed" + speed + "T" + T) == False :
+				print "Ja en vinkel!"
+				angles.append((angle,level))
 	print angles
 	if len(angles) != 0:
 		print "Nu skickas allt ivag :)"
-		for level in range(int(n_levels)+1):
-			response = group(convertFile.s(angle, n_nodes, str(level), num_samples, visc, speed, T) for angle in angles)
-			result = response.apply_async()
-			result.get()
+		response = group(convertFile.s(angle, n_nodes, str(level), num_samples, visc, speed, T) for (angle, level) in angles)
+		result = response.apply_async()
+		result.get()
 
-			####################################
-			for t in result.get():
-				fileNamePlot = t
-				#plot_file(fileNamePlot, data)
-				to_db(fileNamePlot, "")
+		####################################
+		for t in result.get():
+			fileNamePlot = t
+			#plot_file(fileNamePlot, data)
+			to_db(fileNamePlot, "")
 		db = open(dataBaseName, "r")
 		conn.put_object(bucket_name, dataBaseName, db)
 		#os.system("rm -rf  msh/*")

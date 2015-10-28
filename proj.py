@@ -92,11 +92,11 @@ def readFile(fileName):
 	lines = open(fileName, "r").readlines()
 	for x in range(1, len(lines)):
 		time = lines[x].strip().split()[0]
-		timeColumn.append(time)
+		timeColumn.append(float(time))
 		lift = lines[x].strip().split()[1]
-		liftColumn.append(lift)
+		liftColumn.append(float(lift))
 		drag = lines[x].strip().split()[2]
-		dragColumn.append(drag)
+		dragColumn.append(float(drag))
 	resultList = []
 	resultList.append(timeColumn)
 	resultList.append(liftColumn)
