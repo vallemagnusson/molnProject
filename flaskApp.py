@@ -57,13 +57,13 @@ def runsh():
 		angle = (int(angle_start) + anglediff * i)
 		print 1, angle
 		for level in range(int(n_levels)+1):
-			if in_db("r" + level + "a" + str(angle) + "n" + n_nodes + "Num" + num_samples + "Visc" + visc + "Speed" + speed + "T" + T) == False :
+			if in_db("r" + str(level) + "a" + str(angle) + "n" + n_nodes + "Num" + num_samples + "Visc" + visc + "Speed" + speed + "T" + T) == False :
 				print "Ja en vinkel!"
 				angles.append((angle,level))
 	print angles
 	if len(angles) != 0:
 		print "Nu skickas allt ivag :)"
-		response = group(convertFile.s(angle, n_nodes, str(level), num_samples, visc, speed, T) for (angle, level) in angles)
+		response = group(convertFile.s(str(angle), n_nodes, str(level), num_samples, visc, speed, T) for (angle, level) in angles)
 		result = response.apply_async()
 		result.get()
 
