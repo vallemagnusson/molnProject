@@ -50,7 +50,7 @@ def runsh():
 	dbFile.write(fileContent)
 	dbFile.close()
 
-	############# Maste göras om.... #########################
+	############# Maste goras om.... #########################
 	for i in range(0, int(n_angles)):
 
 		angle = 0
