@@ -65,7 +65,7 @@ def runsh():
 		print "Nu skickas allt ivag :)"
 		time_to_calculate = time.time()
 		response = group(convertFile.s(str(angle), n_nodes, str(level), num_samples, visc, speed, T) for (angle, level) in angles)
-		print "Time for response: " str(time.time() - time_to_calculate)
+		print "Time for response: " + str(time.time() - time_to_calculate)
 
 		time_to_calculate_2 = time.time()
 		result = response.apply_async()
