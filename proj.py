@@ -80,7 +80,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	plot_file(pictureName, resultLists)
 	pictureFile = open(pictureName, "r")
 	object_id = conn.put_object(bucket_name, pictureName, pictureFile)
-	os.system("rm -rf " + fileNameWithoutExtension + "*")
+	os.system("sudo rm -rf " + fileNameWithoutExtension + "*")
 	return (dbName)
 	
 @app.task
