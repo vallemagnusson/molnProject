@@ -63,17 +63,32 @@ def runsh():
 	print angles
 	if len(angles) != 0:
 		print "Nu skickas allt ivag :)"
+		time_to_calculate = time.time()
 		response = group(convertFile.s(str(angle), n_nodes, str(level), num_samples, visc, speed, T) for (angle, level) in angles)
+		print "Time for response: " str(time.time() - time_to_calculate)
+
+		time_to_calculate_2 = time.time()
 		result = response.apply_async()
+		print "Time for result var: " + str(time.time() - time_to_calculate_2)
 		result.get()
+		print "Time to calculate all: " + str(time.time() - time_to_calculate)
 
 		####################################
+		print "Write to DB has starts"
+		time_to_write_to_db_start = time.time()
 		for t in result.get():
 			fileNamePlot = t
 			#plot_file(fileNamePlot, data)
 			to_db(fileNamePlot, "")
+		print "Time to write to DB: " + str(time.time() - time_to_write_to_db_start)
+		print "Done writing to DB"
+
 		db = open(dataBaseName, "r")
+
+		print "Put DB in container"
+		time_put_DB = time.time()
 		conn.put_object(bucket_name, dataBaseName, db)
+		print "Time to put to container: " + str(time.time() - time_put_DB)
 		#os.system("rm -rf  msh/*")
 		#os.system("rm -rf  geo/*")
 		#os.system("mv *.png pictures/")
