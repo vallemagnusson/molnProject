@@ -7,3 +7,7 @@ userdatafiles
 setUpServer.py
 *.pyc
 *.png
+
+*.pyc
+
+*.png
