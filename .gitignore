@@ -5,3 +5,5 @@ ACC-Course-openrc.sh
 workerSetup.py
 userdatafiles
 setUpServer.py
+*.pyc
+*.png
