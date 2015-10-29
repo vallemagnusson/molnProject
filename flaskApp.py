@@ -95,7 +95,7 @@ def runsh():
 		#####################################
 		
 		##subprocess.call(["mv", "*.png", "pictures/"])
-
+		os.system("sudo rm -rf " + dataBaseName)
 	return render_template('site/runsh.html', 
 							angle_start=angle_start, 
 							angle_stop=angle_stop, 
