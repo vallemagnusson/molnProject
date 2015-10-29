@@ -34,16 +34,16 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	fileName = "r" + n_levels + "a" + str(angle) + "n" + n_nodes + ".msh"
 	fileNameWithoutExtension = os.path.splitext(fileName)[0]
 	xmlFileName = fileNameWithoutExtension + ".xml"
-	subprocess.call(["mkdir", fileNameWithoutExtension])
-	subprocess.call(['chmod', '-R', '777', fileNameWithoutExtension])
+	subprocess.check_call(["mkdir", fileNameWithoutExtension])
+	subprocess.check_call(['chmod', '-R', '777', fileNameWithoutExtension])
 	print 1, "Started to process file: " + str(fileName)
-	subprocess.call(["cp", "-a", "run.sh", fileNameWithoutExtension])
-	subprocess.call(["cp", "-a", "naca2gmsh_geo.py", fileNameWithoutExtension])
-	subprocess.call(["cp", "-a", "airfoil", fileNameWithoutExtension])
-	subprocess.call(["mkdir", "msh"], cwd=fileNameWithoutExtension+"/")
-	subprocess.call(["mkdir", "geo"], cwd=fileNameWithoutExtension+"/")
-	subprocess.call(['chmod', '-R', '777', fileNameWithoutExtension+"/msh"])
-	subprocess.Popen(["sudo", "./run.sh", str(angle), str(angle), "1", n_nodes, n_levels], cwd=fileNameWithoutExtension+"/")
+	subprocess.check_call(["cp", "-a", "run.sh", fileNameWithoutExtension])
+	subprocess.check_call(["cp", "-a", "naca2gmsh_geo.py", fileNameWithoutExtension])
+	subprocess.check_call(["cp", "-a", "airfoil", fileNameWithoutExtension])
+	subprocess.check_call(["mkdir", "msh"], cwd=fileNameWithoutExtension+"/")
+	subprocess.check_call(["mkdir", "geo"], cwd=fileNameWithoutExtension+"/")
+	subprocess.check_call(['chmod', '-R', '777', fileNameWithoutExtension+"/msh"])
+	subprocess.check_call(["sudo", "./run.sh", str(angle), str(angle), "1", n_nodes, n_levels], cwd=fileNameWithoutExtension+"/")
 	
 	fileLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension + "/msh/"
 	content = sorted(os.listdir(fileLocation))
@@ -53,7 +53,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 		time.sleep(0.5)
 		content = sorted(os.listdir(fileLocation))
 
-	subprocess.call(["sudo","dolfin-convert", "msh/"+fileName, xmlFileName], cwd=fileNameWithoutExtension+"/")
+	subprocess.check_call(["sudo","dolfin-convert", "msh/"+fileName, xmlFileName], cwd=fileNameWithoutExtension+"/")
 
 	##########################################
 	########## Run airfoil on file ###########
@@ -62,7 +62,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	visc_s = str(visc)
 	speed_s = str(speed)
 	T_s = str(T)
-	subprocess.call(["sudo","./airfoil", num, visc_s, speed_s, T_s, xmlFileName], cwd=fileNameWithoutExtension+"/")
+	subprocess.check_call(["sudo","./airfoil", num, visc_s, speed_s, T_s, xmlFileName], cwd=fileNameWithoutExtension+"/")
 	##########################################
 	######### Get drag_ligt.m values #########
 	##########################################

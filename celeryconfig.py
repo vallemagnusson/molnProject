@@ -12,4 +12,4 @@ CELERY_IMPORTS = ('proj', )
 ## Using the database to store task state and results.
 CELERY_RESULT_BACKEND = 'amqp://'
 
-CELERY_ACKS_LATE = True
+#CELERY_ACKS_LATE = True
