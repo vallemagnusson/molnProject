@@ -70,7 +70,7 @@ def runsh():
 				angles.append((angle,level))
 			else:
 				new_picture = open(pictureName, "w")
-				picture = conn.get_object(bucket_name, pictureName)
+				(head, picture) = conn.get_object(bucket_name, pictureName)
 				new_picture.write(picture)
 				dispaly_list.append(pictureName)
 				new_picture.close()
@@ -92,7 +92,7 @@ def runsh():
 
 		for pictureName in result.get():
 			new_picture = open(pictureName + ".png", "w")
-			picture = conn.get_object(bucket_name, pictureName + ".png")
+			(head, picture) = conn.get_object(bucket_name, pictureName + ".png")
 			new_picture.write(picture)
 			dispaly_list.append(pictureName + ".png")
 			new_picture.close()
