@@ -38,23 +38,26 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	subprocess.check_call(["mkdir", fileNameWithoutExtension])
 	subprocess.check_call(['chmod', '-R', '777', fileNameWithoutExtension])
 	print "Started to process file: " + str(fileName)
+	print "Copying and creating files and directorys"
 	subprocess.check_call(["cp", "-a", "run.sh", fileNameWithoutExtension])
 	subprocess.check_call(["cp", "-a", "naca2gmsh_geo.py", fileNameWithoutExtension])
 	subprocess.check_call(["cp", "-a", "airfoil", fileNameWithoutExtension])
 	subprocess.check_call(["mkdir", "msh"], cwd=fileNameWithoutExtension+"/")
 	subprocess.check_call(["mkdir", "geo"], cwd=fileNameWithoutExtension+"/")
 	subprocess.check_call(['chmod', '-R', '777', fileNameWithoutExtension+"/msh"])
+	print "Running run.sh..."
 	subprocess.check_call(["sudo", "./run.sh", str(angle), str(angle), "1", n_nodes, n_levels], cwd=fileNameWithoutExtension+"/")
-	
+	print "Done running run.sh"
 	fileLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension + "/msh/"
 	content = sorted(os.listdir(fileLocation))
-	print "Files in msh-directory: " + str(content)
+	print "Created files in msh-directory: " + str(content)
 	#while fileName not in content:
 	#	print "Making msh not ready"
 	#	time.sleep(0.5)
 	#	content = sorted(os.listdir(fileLocation))
-
+	print "Running dolfin-convert..."
 	subprocess.check_call(["sudo","dolfin-convert", "msh/"+fileName, xmlFileName], cwd=fileNameWithoutExtension+"/", stdout=FNULL, stderr=subprocess.STDOUT)
+	print "Done running dolfin-convert..."
 
 	##########################################
 	########## Run airfoil on file ###########
@@ -63,13 +66,16 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	visc_s = str(visc)
 	speed_s = str(speed)
 	T_s = str(T)
+	print "Running airfoil..."
 	subprocess.check_call(["sudo","./airfoil", num, visc_s, speed_s, T_s, xmlFileName], cwd=fileNameWithoutExtension+"/", stdout=FNULL, stderr=subprocess.STDOUT)
+	print "Done running airfoil"
 	##########################################
 	######### Get drag_ligt.m values #########
 	##########################################
 	#while "results" not in content:
 	#	print "result form airfoil not ready"
 	#	content = sorted(os.listdir(fileLocation))
+	print "Getting drag_ligt.m to lists"
 	resultLists = readFile("/home/ubuntu/molnProject/" +fileNameWithoutExtension+"/results/drag_ligt.m")
 	#os.system("sudo rm -rf " + fileNameWithoutExtension + "*")
 	#!!!!!!!!!!!!!os.system("rm -rf  msh/*")
@@ -77,10 +83,14 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#!!!!!!!!!!!!!return (fileNameWithoutExtension+"N"+num+"v"+visc_s+"s"+speed_s+"T"+T_s+".msh", resultLists)
 	pictureName = fileNameWithoutExtension + "Num" + num + "Visc" + visc_s + "Speed" + speed_s + "T" + T_s + ".png"
 	dbName = fileNameWithoutExtension + "Num" + num + "Visc" + visc_s + "Speed" + speed_s + "T" + T_s
-	print resultLists
+	#print resultLists
+	print "Plot the values"
 	plot_file(pictureName, resultLists)
 	pictureFile = open(pictureName, "r")
+	print "Sending png to container"
+	time_1 = time.time()
 	object_id = conn.put_object(bucket_name, pictureName, pictureFile)
+	print "Time to send png to container: " + str(time.time() - time_1)
 	os.system("sudo rm -rf " + fileNameWithoutExtension + "*")
 	FNULL.close()
 	return (dbName)
