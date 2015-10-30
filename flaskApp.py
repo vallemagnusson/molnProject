@@ -74,9 +74,9 @@ def runsh():
 				new_picture.write(picture)
 				dispaly_list.append(pictureName)
 				new_picture.close()
+	print dispaly_list
 
 	print angles
-	global result
 	if len(angles) != 0:
 		print "Nu skickas allt ivag :)"
 		time_to_calculate = time.time()
@@ -84,21 +84,21 @@ def runsh():
 		print "Time for response: " + str(time.time() - time_to_calculate)
 
 		time_to_calculate_2 = time.time()
-		result = response.apply_async()
+		global result = response.apply_async()
 		print "Time for result var: " + str(time.time() - time_to_calculate_2)
 		result.get()
 		print "Time to calculate all: " + str(time.time() - time_to_calculate)
 
-	print dispaly_list
+		print dispaly_list
 
-	for pictureName in result.get():
-		new_picture = open(pictureName + ".png", "w")
-		(head, picture) = conn.get_object(bucket_name, pictureName + ".png")
-		new_picture.write(picture)
-		dispaly_list.append(pictureName + ".png")
-		new_picture.close()
+		for pictureName in result.get():
+			new_picture = open(pictureName + ".png", "w")
+			(head, picture) = conn.get_object(bucket_name, pictureName + ".png")
+			new_picture.write(picture)
+			dispaly_list.append(pictureName + ".png")
+			new_picture.close()
 
-	print dispaly_list
+		print dispaly_list
 
 		#####################################
 		#print "Write to DB has starts"
