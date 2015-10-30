@@ -37,7 +37,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	xmlFileName = fileNameWithoutExtension + ".xml"
 	subprocess.check_call(["mkdir", fileNameWithoutExtension])
 	subprocess.check_call(['chmod', '-R', '777', fileNameWithoutExtension])
-	print 1, "Started to process file: " + str(fileName)
+	print "Started to process file: " + str(fileName)
 	subprocess.check_call(["cp", "-a", "run.sh", fileNameWithoutExtension])
 	subprocess.check_call(["cp", "-a", "naca2gmsh_geo.py", fileNameWithoutExtension])
 	subprocess.check_call(["cp", "-a", "airfoil", fileNameWithoutExtension])
@@ -48,7 +48,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	
 	fileLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension + "/msh/"
 	content = sorted(os.listdir(fileLocation))
-	print 2, "Files in msh-directory: " + str(content)
+	print "Files in msh-directory: " + str(content)
 	#while fileName not in content:
 	#	print "Making msh not ready"
 	#	time.sleep(0.5)
@@ -71,7 +71,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#	print "result form airfoil not ready"
 	#	content = sorted(os.listdir(fileLocation))
 	resultLists = readFile("/home/ubuntu/molnProject/" +fileNameWithoutExtension+"/results/drag_ligt.m")
-	os.system("rm -rf " + fileNameWithoutExtension + "*")
+	#os.system("rm -rf " + fileNameWithoutExtension + "*")
 	#!!!!!!!!!!!!!os.system("rm -rf  msh/*")
 	#!!!!!!!!!!!!!os.system("rm -rf  geo/*")
 	#!!!!!!!!!!!!!return (fileNameWithoutExtension+"N"+num+"v"+visc_s+"s"+speed_s+"T"+T_s+".msh", resultLists)
