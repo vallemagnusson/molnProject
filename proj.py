@@ -31,6 +31,7 @@ bucket_name = "MavaPictureContainer"
 
 @app.task
 def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
+	FNULL = open(os.devnull, 'w')
 	fileName = "r" + n_levels + "a" + str(angle) + "n" + n_nodes + ".msh"
 	fileNameWithoutExtension = os.path.splitext(fileName)[0]
 	xmlFileName = fileNameWithoutExtension + ".xml"
@@ -53,7 +54,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#	time.sleep(0.5)
 	#	content = sorted(os.listdir(fileLocation))
 
-	subprocess.check_call(["sudo","dolfin-convert", "msh/"+fileName, xmlFileName], cwd=fileNameWithoutExtension+"/")
+	subprocess.check_call(["sudo","dolfin-convert", "msh/"+fileName, xmlFileName], cwd=fileNameWithoutExtension+"/", stdout=FNULL, stderr=subprocess.STDOUT)
 
 	##########################################
 	########## Run airfoil on file ###########
@@ -62,7 +63,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	visc_s = str(visc)
 	speed_s = str(speed)
 	T_s = str(T)
-	subprocess.check_call(["sudo","./airfoil", num, visc_s, speed_s, T_s, xmlFileName], cwd=fileNameWithoutExtension+"/", shell=True)
+	subprocess.check_call(["sudo","./airfoil", num, visc_s, speed_s, T_s, xmlFileName], cwd=fileNameWithoutExtension+"/", stdout=FNULL, stderr=subprocess.STDOUT)
 	##########################################
 	######### Get drag_ligt.m values #########
 	##########################################
@@ -80,7 +81,8 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	plot_file(pictureName, resultLists)
 	pictureFile = open(pictureName, "r")
 	object_id = conn.put_object(bucket_name, pictureName, pictureFile)
-	os.system("sudo rm -rf " + fileNameWithoutExtension + "*")
+	subprocess.check_call(["sudo","rm","-rf", fileNameWithoutExtension + "*"], stdout=FNULL, stderr=subprocess.STDOUT)
+	FNULL.close()
 	return (dbName)
 	
 @app.task
