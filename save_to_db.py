@@ -8,7 +8,7 @@ def to_db(key, value):
 	db = pickledb.load(dataBaseName, False)
 	dbKeys = db.getall()
 	if key not in dbKeys:
-		print 1, "Ny grej"
+		print 1, key
 		db.set(key, value)
 		db.dump()
 
