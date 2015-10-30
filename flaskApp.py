@@ -95,11 +95,11 @@ def runsh():
 				for pictureName in missing_pictures:
 					print "In for loop"
 					time.sleep(5)
-					(head, picture) = conn.get_object(bucket_name, pictureName + ".png")
+					(head, picture) = conn.get_object(bucket_name, pictureName)
 					print "Got picture!!!"
-					new_picture = open(pictureName + ".png", "w")
+					new_picture = open(pictureName, "w")
 					new_picture.write(picture)
-					dispaly_list.append(pictureName + ".png")
+					dispaly_list.append(pictureName)
 					new_picture.close()
 					missing_pictures.remove(pictureName)
 					print "Got picture: " + str(pictureName)
