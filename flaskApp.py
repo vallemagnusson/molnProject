@@ -45,10 +45,15 @@ def runsh():
 	anglediff = (int(angle_stop) - int(angle_start)) / int(n_angles)
 	
 	angles = []
-	(header, fileContent) = conn.get_object(bucket_name, dataBaseName)
-	dbFile = open(dataBaseName, "w")
-	dbFile.write(fileContent)
-	dbFile.close()
+	#(header, fileContent) = conn.get_object(bucket_name, dataBaseName)
+	#dbFile = open(dataBaseName, "w")
+	#dbFile.write(fileContent)
+	#dbFile.close()
+
+	list_of_pictures = []
+	(response, container_list) = conn.get_container(bucket_name)
+	for container in container_list:
+		list_of_pictures.append( container['name'] )
 
 	############# Maste goras om.... #########################
 	for i in range(0, int(n_angles)):
@@ -57,8 +62,10 @@ def runsh():
 		angle = (int(angle_start) + anglediff * i)
 		print 1, angle
 		for level in range(int(n_levels)+1):
-			if in_db("r" + str(level) + "a" + str(angle) + "n" + n_nodes + "Num" + num_samples + "Visc" + visc + "Speed" + speed + "T" + T) == False :
-				print "Ja en vinkel!"
+		#	if in_db("r" + str(level) + "a" + str(angle) + "n" + n_nodes + "Num" + num_samples + "Visc" + visc + "Speed" + speed + "T" + T) == False :
+		#		print "Ja en vinkel!"
+			pictureName = "r" + str(level) + "a" + str(angle) + "n" + n_nodes + "Num" + num_samples + "Visc" + visc + "Speed" + speed + "T" + T
+			if pictureName in list_of_pictures:
 				angles.append((angle,level))
 	print angles
 	if len(angles) != 0:
@@ -76,10 +83,10 @@ def runsh():
 		####################################
 		print "Write to DB has starts"
 		time_to_write_to_db_start = time.time()
-		for t in result.get():
-			fileNamePlot = t
-			#plot_file(fileNamePlot, data)
-			to_db(fileNamePlot, "")
+		#for t in result.get():
+		#	fileNamePlot = t
+		#	#plot_file(fileNamePlot, data)
+		#	to_db(fileNamePlot, "")
 		print "Time to write to DB: " + str(time.time() - time_to_write_to_db_start)
 		print "Done writing to DB"
 
@@ -95,7 +102,7 @@ def runsh():
 		#####################################
 		
 		##subprocess.call(["mv", "*.png", "pictures/"])
-		os.system("sudo rm -rf " + dataBaseName)
+		#os.system("sudo rm -rf " + dataBaseName)
 	return render_template('site/runsh.html', 
 							angle_start=angle_start, 
 							angle_stop=angle_stop, 
