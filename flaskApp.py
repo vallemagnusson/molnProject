@@ -51,6 +51,7 @@ def runsh():
 	#dbFile.close()
 
 	list_of_pictures = []
+	dispaly_list = []
 	(response, container_list) = conn.get_container(bucket_name)
 	for container in container_list:
 		list_of_pictures.append( container['name'] )
@@ -64,9 +65,16 @@ def runsh():
 		for level in range(int(n_levels)+1):
 		#	if in_db("r" + str(level) + "a" + str(angle) + "n" + n_nodes + "Num" + num_samples + "Visc" + visc + "Speed" + speed + "T" + T) == False :
 		#		print "Ja en vinkel!"
-			pictureName = "r" + str(level) + "a" + str(angle) + "n" + n_nodes + "Num" + num_samples + "Visc" + visc + "Speed" + speed + "T" + T
+			pictureName = "r" + str(level) + "a" + str(angle) + "n" + n_nodes + "Num" + num_samples + "Visc" + visc + "Speed" + speed + "T" + T +".png"
 			if pictureName not in list_of_pictures:
 				angles.append((angle,level))
+			else:
+				new_picture = open(pictureName, "w")
+				picture = conn.get_object(bucket_name, pictureName)
+				new_picture.write(picture)
+				dispaly_list.append(pictureName)
+				new_picture.close()
+
 	print angles
 	if len(angles) != 0:
 		print "Nu skickas allt ivag :)"
@@ -80,22 +88,33 @@ def runsh():
 		result.get()
 		print "Time to calculate all: " + str(time.time() - time_to_calculate)
 
-		####################################
-		print "Write to DB has starts"
-		time_to_write_to_db_start = time.time()
-		#for t in result.get():
-		#	fileNamePlot = t
-		#	#plot_file(fileNamePlot, data)
-		#	to_db(fileNamePlot, "")
-		print "Time to write to DB: " + str(time.time() - time_to_write_to_db_start)
-		print "Done writing to DB"
+		print dispaly_list
 
-		db = open(dataBaseName, "r")
+		for pictureName in result.get():
+			new_picture = open(pictureName, "w")
+			picture = conn.get_object(bucket_name, pictureName)
+			new_picture.write(picture)
+			dispaly_list.append(pictureName)
+			new_picture.close()
 
-		print "Put DB in container"
-		time_put_DB = time.time()
-		conn.put_object(bucket_name, dataBaseName, db)
-		print "Time to put to container: " + str(time.time() - time_put_DB)
+		print dispaly_list
+
+		#####################################
+		#print "Write to DB has starts"
+		#time_to_write_to_db_start = time.time()
+		##for t in result.get():
+		##	fileNamePlot = t
+		##	#plot_file(fileNamePlot, data)
+		##	to_db(fileNamePlot, "")
+		#print "Time to write to DB: " + str(time.time() - time_to_write_to_db_start)
+		#print "Done writing to DB"
+
+		##db = open(dataBaseName, "r")
+
+		#print "Put DB in container"
+		#time_put_DB = time.time()
+		##conn.put_object(bucket_name, dataBaseName, db)
+		#print "Time to put to container: " + str(time.time() - time_put_DB)
 		#os.system("rm -rf  msh/*")
 		#os.system("rm -rf  geo/*")
 		#os.system("mv *.png pictures/")
