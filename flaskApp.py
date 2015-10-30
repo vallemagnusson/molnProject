@@ -84,7 +84,7 @@ def runsh():
 		print "Time for response: " + str(time.time() - time_to_calculate)
 
 		time_to_calculate_2 = time.time()
-		global result = response.apply_async()
+		result = response.apply_async()
 		print "Time for result var: " + str(time.time() - time_to_calculate_2)
 		result.get()
 		print "Time to calculate all: " + str(time.time() - time_to_calculate)
