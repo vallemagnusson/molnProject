@@ -65,7 +65,7 @@ def runsh():
 		#	if in_db("r" + str(level) + "a" + str(angle) + "n" + n_nodes + "Num" + num_samples + "Visc" + visc + "Speed" + speed + "T" + T) == False :
 		#		print "Ja en vinkel!"
 			pictureName = "r" + str(level) + "a" + str(angle) + "n" + n_nodes + "Num" + num_samples + "Visc" + visc + "Speed" + speed + "T" + T
-			if pictureName in list_of_pictures:
+			if pictureName not in list_of_pictures:
 				angles.append((angle,level))
 	print angles
 	if len(angles) != 0:
