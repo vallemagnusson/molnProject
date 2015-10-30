@@ -90,8 +90,13 @@ def runsh():
 			print "In while loop"
 			time.sleep(5)
 			try:
+				print "In try"
+				time.sleep(5)
 				for pictureName in missing_pictures:
+					print "In for loop"
+					time.sleep(5)
 					(head, picture) = conn.get_object(bucket_name, pictureName + ".png")
+					print "Got picture!!!"
 					new_picture = open(pictureName + ".png", "w")
 					new_picture.write(picture)
 					dispaly_list.append(pictureName + ".png")
