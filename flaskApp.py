@@ -88,7 +88,7 @@ def runsh():
 		print "Time for result var: " + str(time.time() - time_to_calculate_2)
 		while len(missing_pictures) != 0:
 			try:
-				for pictureName in result.get():
+				for pictureName in missing_pictures:
 					(head, picture) = conn.get_object(bucket_name, pictureName + ".png")
 					new_picture = open(pictureName + ".png", "w")
 					new_picture.write(picture)
