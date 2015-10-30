@@ -91,10 +91,10 @@ def runsh():
 		print dispaly_list
 
 		for pictureName in result.get():
-			new_picture = open(pictureName, "w")
-			picture = conn.get_object(bucket_name, pictureName)
+			new_picture = open(pictureName + ".png", "w")
+			picture = conn.get_object(bucket_name, pictureName + ".png")
 			new_picture.write(picture)
-			dispaly_list.append(pictureName)
+			dispaly_list.append(pictureName + ".png")
 			new_picture.close()
 
 		print dispaly_list
