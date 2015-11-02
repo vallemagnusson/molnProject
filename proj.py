@@ -35,7 +35,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	mshFileName = "r" + n_levels + "a" + str(angle) + "n" + n_nodes + ".msh"
 	fileNameWithoutExtension = os.path.splitext(mshFileName)[0]
 	xmlFileName = fileNameWithoutExtension + ".xml"
-	fileLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension
+	currentFolderLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension
 	mshFileLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension + "/msh/"
 	#############################################################
 	# Remove folder if exists
@@ -77,7 +77,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	speed_s = str(speed)
 	T_s = str(T)
 	airfoil_call = "sudo ./airfoil " + num + " " + visc_s + " " + speed_s + " " + T_s + " " + xmlFileName
-	subprocess.check_call(airfoil_call, cwd=fileNameWithoutExtension+"/", stdout=FNULL, stderr=subprocess.STDOUT)
+	subprocess.check_call(airfoil_call, cwd=currentFolderLocation+"/", stdout=FNULL, stderr=subprocess.STDOUT)
 	#############################################################
 	# Extracting information from frag_ligt.m 
 	#############################################################	
