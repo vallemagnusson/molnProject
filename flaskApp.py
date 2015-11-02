@@ -29,6 +29,7 @@ def form():
 
 @app.route('/runsh/', methods=['POST'])
 def runsh():
+
 	angle_start=request.form['angle_start']
 	angle_stop=request.form['angle_stop']
 	n_angles=request.form['n_angles']
@@ -38,6 +39,18 @@ def runsh():
 	visc=request.form['visc']
 	speed=request.form['speed']
 	T=request.form['T']
+
+	###########################
+	# Test
+	###########################
+	run_args = {}
+	run_args['angle_start']=str(request.form['angle_start'])
+	run_args['angle_stop']=str(request.form['angle_stop'])
+	run_args['n_angles']=str(request.form['n_angles'])
+	run_args['n_nodes']=str(request.form['n_nodes'])
+	run_args['n_levels']=str(request.form['n_levels'])
+	print run_args
+	###########################
 	print 1, "- - - - - - - - Run start - - - - - - - -"
 	###########################
 	##### Check if exists #####
@@ -45,14 +58,10 @@ def runsh():
 	anglediff = (int(angle_stop) - int(angle_start)) / int(n_angles)
 	
 	angles = []
-	#(header, fileContent) = conn.get_object(bucket_name, dataBaseName)
-	#dbFile = open(dataBaseName, "w")
-	#dbFile.write(fileContent)
-	#dbFile.close()
-
 	list_of_pictures = []
 	missing_pictures = []
 	dispaly_list = []
+
 	(response, container_list) = conn.get_container(bucket_name)
 	for container in container_list:
 		list_of_pictures.append( container['name'] )
@@ -87,16 +96,9 @@ def runsh():
 		result = response.apply_async()
 		print "Time for result var: " + str(time.time() - time_to_calculate_2)
 		while len(missing_pictures) != 0:
-			#print "In while loop"
-			#time.sleep(5)
 			try:
-				#print "In try"
-				#time.sleep(5)
 				for pictureName in missing_pictures:
-					#print "In for loop"
-					#time.sleep(5)
 					(head, picture) = conn.get_object(bucket_name, pictureName)
-					#print "Got picture!!!"
 					new_picture = open(pictureName, "w")
 					new_picture.write(picture)
 					dispaly_list.append(pictureName)
