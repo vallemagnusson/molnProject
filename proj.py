@@ -35,7 +35,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	mshFileName = "r" + n_levels + "a" + str(angle) + "n" + n_nodes + ".msh"
 	fileNameWithoutExtension = os.path.splitext(mshFileName)[0]
 	xmlFileName = fileNameWithoutExtension + ".xml"
-	currentFolderLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension
+	currentFolderLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension + "/"
 	mshFileLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension + "/msh/"
 	#############################################################
 	# Remove folder if exists
@@ -67,7 +67,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#############################################################
 	print "Running dolfin-convert..."
 	#subprocess.check_call(["sudo","dolfin-convert", "msh/"+mshFileName, xmlFileName], cwd=fileNameWithoutExtension+"/", stdout=FNULL, stderr=subprocess.STDOUT)
-	gmsh2xml(mshFileLocation + mshFileName, mshFileLocation + xmlFileName)
+	gmsh2xml(mshFileLocation + mshFileName, currentFolderLocation + xmlFileName)
 	#############################################################
 	# Run airfoil on file 
 	#############################################################
@@ -76,8 +76,8 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	visc_s = str(visc)
 	speed_s = str(speed)
 	T_s = str(T)
-	airfoil_call = "sudo ./airfoil " + num + " " + visc_s + " " + speed_s + " " + T_s + " " + xmlFileName
-	subprocess.check_call(airfoil_call, cwd=currentFolderLocation+"/", stdout=FNULL, stderr=subprocess.STDOUT)
+	#airfoil_call = "sudo ./airfoil " + num + " " + visc_s + " " + speed_s + " " + T_s + " " + xmlFileName
+	subprocess.check_call(["sudo","./airfoil", num, visc_s, speed_s, T_s, xmlFileName], cwd=fileNameWithoutExtension+"/", stdout=FNULL, stderr=subprocess.STDOUT)
 	#############################################################
 	# Extracting information from frag_ligt.m 
 	#############################################################	
