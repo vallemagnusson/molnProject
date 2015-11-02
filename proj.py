@@ -32,10 +32,10 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	# Creating names and output place
 	#############################################################
 	FNULL = open(os.devnull, 'w')
-	fileName = "r" + n_levels + "a" + str(angle) + "n" + n_nodes + ".msh"
-	fileNameWithoutExtension = os.path.splitext(fileName)[0]
+	mshFileName = "r" + n_levels + "a" + str(angle) + "n" + n_nodes + ".msh"
+	fileNameWithoutExtension = os.path.splitext(mshFileName)[0]
 	xmlFileName = fileNameWithoutExtension + ".xml"
-	fileLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension + "/msh/"
+	mshFileLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension + "/msh/"
 	#############################################################
 	# Remove folder if exists
 	#############################################################
@@ -45,7 +45,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#############################################################
 	# Create layout for task
 	#############################################################
-	print "Started to process file: " + str(fileName)
+	print "Started to process file: " + str(mshFileName)
 	print "Copying and creating files and directorys"
 	subprocess.check_call(["mkdir", fileNameWithoutExtension])
 	subprocess.check_call(['chmod', '-R', '777', fileNameWithoutExtension])
@@ -64,8 +64,8 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	# Running dolfin-convert
 	#############################################################
 	print "Running dolfin-convert..."
-	#subprocess.check_call(["sudo","dolfin-convert", "msh/"+fileName, xmlFileName], cwd=fileNameWithoutExtension+"/", stdout=FNULL, stderr=subprocess.STDOUT)
-	gmsh2xml("msh/"+fileName, xmlFileName)
+	#subprocess.check_call(["sudo","dolfin-convert", "msh/"+mshFileName, xmlFileName], cwd=fileNameWithoutExtension+"/", stdout=FNULL, stderr=subprocess.STDOUT)
+	gmsh2xml(mshFileLocation + mshFileName, xmlFileName)
 	#############################################################
 	# Run airfoil on file 
 	#############################################################
@@ -95,12 +95,12 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	return (dbName)
 	
 @app.task
-def readFile(fileName):
-	theFile = open(fileName, "r").read()
+def readFile(mshFileName):
+	theFile = open(mshFileName, "r").read()
 	timeColumn = []
 	liftColumn = []
 	dragColumn = []
-	lines = open(fileName, "r").readlines()
+	lines = open(mshFileName, "r").readlines()
 	for x in range(1, len(lines)):
 		time = lines[x].strip().split()[0]
 		timeColumn.append(float(time))
