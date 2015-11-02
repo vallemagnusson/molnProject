@@ -39,7 +39,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#############################################################
 	# Remove folder if exists
 	#############################################################
-	content = sorted(os.listdir(fileLocation))
+	content = sorted(os.listdir("/home/ubuntu/molnProject/"))
 	if fileNameWithoutExtension in content:
 		os.system("sudo rm -rf " + fileNameWithoutExtension + "*")
 	#############################################################

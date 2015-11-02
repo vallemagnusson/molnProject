@@ -50,6 +50,12 @@ def runsh():
 	run_args['n_nodes']=str(request.form['n_nodes'])
 	run_args['n_levels']=str(request.form['n_levels'])
 	print run_args
+	airfoil_args = {}
+	airfoil_args['num_samples'] = str(request.form['num_samples'])
+	airfoil_args['visc'] = str(request.form['visc'])
+	airfoil_args['speed'] = str(request.form['speed'])
+	airfoil_args['T'] = str(request.form['T'])
+	print airfoil_args
 	###########################
 	print 1, "- - - - - - - - Run start - - - - - - - -"
 	###########################
