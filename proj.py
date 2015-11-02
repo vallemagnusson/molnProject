@@ -67,7 +67,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#############################################################
 	print "Running dolfin-convert..."
 	#subprocess.check_call(["sudo","dolfin-convert", "msh/"+mshFileName, xmlFileName], cwd=fileNameWithoutExtension+"/", stdout=FNULL, stderr=subprocess.STDOUT)
-	gmsh2xml(mshFileLocation + mshFileName, xmlFileName)
+	gmsh2xml(mshFileLocation + mshFileName, mshFileLocation + xmlFileName)
 	#############################################################
 	# Run airfoil on file 
 	#############################################################
