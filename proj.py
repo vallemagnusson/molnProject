@@ -35,6 +35,7 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	fileName = "r" + n_levels + "a" + str(angle) + "n" + n_nodes + ".msh"
 	fileNameWithoutExtension = os.path.splitext(fileName)[0]
 	xmlFileName = fileNameWithoutExtension + ".xml"
+	fileLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension + "/msh/"
 	#############################################################
 	# Remove folder if exists
 	#############################################################
@@ -59,7 +60,6 @@ def convertFile(angle, n_nodes, n_levels, num_samples, visc, speed, T):
 	#############################################################
 	print "Running run.sh..."
 	subprocess.check_call(["sudo", "./run.sh", str(angle), str(angle), "1", n_nodes, n_levels], cwd=fileNameWithoutExtension+"/")
-	fileLocation = "/home/ubuntu/molnProject/" + fileNameWithoutExtension + "/msh/"
 	#############################################################
 	# Running dolfin-convert
 	#############################################################
