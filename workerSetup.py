@@ -2,15 +2,15 @@ import os
 import swiftclient.client
 import sys
 import time
+from novaclient.client import Client
+config = {'username':os.environ['OS_USERNAME'], 
+          'api_key':os.environ['OS_PASSWORD'],
+          'project_id':os.environ['OS_TENANT_NAME'],
+          'auth_url':os.environ['OS_AUTH_URL']}
+
+nc = Client('2',**config)
 ##import paramiko
 def createWorker(workerNumber):
-  config = {'username':os.environ['OS_USERNAME'], 
-            'api_key':os.environ['OS_PASSWORD'],
-            'project_id':os.environ['OS_TENANT_NAME'],
-            'auth_url':os.environ['OS_AUTH_URL']}
-
-  from novaclient.client import Client
-  nc = Client('2',**config)
   ##############################
   ##### Remove known_hosts #####
   ##############################
