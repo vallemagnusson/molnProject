@@ -12,7 +12,7 @@ import swiftclient.client
 from save_to_db import to_db, in_db
 
 from multiprocessing import Process
-from workerSetup import createWorker
+from workerSetup import createWorker, terminateWorker
 
 app = Flask(__name__, template_folder="/home/ubuntu/molnProject")
 
@@ -65,10 +65,12 @@ def runsh():
 	# Start worker
 	######################################################
 	jobs = []
+	jobsReturn = []
 	for i in range(2):
 		p = Process(target=createWorker, args=(str(i)))
 		jobs.append(p)
 		p.start()
+		jobsReturn.append("MavaServerProj-worker"+str(i))
 
 	print 1, "- - - - - - - - Run start - - - - - - - -"
 	###########################
@@ -140,7 +142,8 @@ def runsh():
 			new_picture.close()
 
 		print dispaly_list
-
+	for workerName in jobsReturn:
+		terminateWorker(workerName)
 		#os.system("sudo rm -rf " + dataBaseName)
 	return render_template('site/runsh.html', 
 							angle_start=angle_start, 
