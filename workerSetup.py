@@ -9,7 +9,15 @@ config = {'username':os.environ['OS_USERNAME'],
           'auth_url':os.environ['OS_AUTH_URL']}
 
 nc = Client('2',**config)
-##import paramiko
+
+def terminateWorker(workerName):
+  server_list = nc.servers.list()
+
+  for server in server_list:
+    if workerName in server.name:
+        print "Terminate instance " + str(server)
+        server.delete()
+
 def createWorker(workerNumber):
   ##############################
   ##### Remove known_hosts #####
