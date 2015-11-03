@@ -10,7 +10,6 @@ import subprocess
 import swiftclient.client
 #from plot_result import plot_file
 from save_to_db import to_db, in_db
-from novaclient.client import Client
 
 from multiprocessing import Process
 from workerSetup import createWorker
@@ -65,7 +64,6 @@ def runsh():
 	######################################################
 	# Start worker
 	######################################################
-	nc = Client('2',**config)
 	jobs = []
 	for i in range(2):
 		p = Process(target=createWorker, args=(str(i)))
