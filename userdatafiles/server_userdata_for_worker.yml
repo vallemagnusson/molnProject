@@ -2,15 +2,15 @@
 
 runcmd:
     - export C_FORCE_ROOT="true"
-    - export BROKER_USER=$BROKER_USER
-    - export BROKER_PASS=$BROKER_PASS
-    - export FLOATING_IP=$FLOATING_IP
-    - export OS_AUTH_URL=$OS_AUTH_URL
-    - export OS_TENANT_ID=$OS_TENANT_ID
-    - export OS_TENANT_NAME=$OS_TENANT_NAME
-    - export OS_PROJECT_NAME=$OS_PROJECT_NAME
-    - export OS_USERNAME=$OS_USERNAME
-    - export OS_PASSWORD=$OS_PASSWORD
-    - export OS_REGION_NAME=$OS_REGION_NAME
+    - export BROKER_USER=
+    - export BROKER_PASS=
+    - export FLOATING_IP=
+    - export OS_AUTH_URL=
+    - export OS_TENANT_ID=
+    - export OS_TENANT_NAME=
+    - export OS_PROJECT_NAME=
+    - export OS_USERNAME=
+    - export OS_PASSWORD=
+    - export OS_REGION_NAME=
     - cd /home/ubuntu/molnProject
     - celery worker -A proj &
