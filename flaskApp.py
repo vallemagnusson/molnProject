@@ -64,6 +64,7 @@ def runsh():
 	######################################################
 	# Start worker
 	######################################################
+	jobs = []
 	for i in range(2):
 		p = Process(target=createWorker, args=(str(i)))
 		jobs.append(p)
