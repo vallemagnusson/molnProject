@@ -11,6 +11,9 @@ import swiftclient.client
 #from plot_result import plot_file
 from save_to_db import to_db, in_db
 
+from multiprocessing import Process
+from workerSetup import createWorker
+
 app = Flask(__name__, template_folder="/home/ubuntu/molnProject")
 
 config = {'user':os.environ['OS_USERNAME'], 
@@ -40,9 +43,9 @@ def runsh():
 	speed=request.form['speed']
 	T=request.form['T']
 
-	###########################
+	######################################################
 	# Test
-	###########################
+	######################################################
 	run_args = {}
 	run_args['angle_start']=str(request.form['angle_start'])
 	run_args['angle_stop']=str(request.form['angle_stop'])
@@ -56,7 +59,16 @@ def runsh():
 	airfoil_args['speed'] = str(request.form['speed'])
 	airfoil_args['T'] = str(request.form['T'])
 	print airfoil_args
-	###########################
+	######################################################
+
+	######################################################
+	# Start worker
+	######################################################
+	for i in range(2):
+		p = Process(target=createWorker, args=(str(i)))
+		jobs.append(p)
+		p.start()
+
 	print 1, "- - - - - - - - Run start - - - - - - - -"
 	###########################
 	##### Check if exists #####
