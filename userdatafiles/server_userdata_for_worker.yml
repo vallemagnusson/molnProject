@@ -1,7 +1,7 @@
 #cloud-config
 
 runcmd:
-    - export C_FORCE_ROOT=$C_FORCE_ROOT
+    - export C_FORCE_ROOT="true"
     - export BROKER_USER=$BROKER_USER
     - export BROKER_PASS=$BROKER_PASS
     - export FLOATING_IP=$FLOATING_IP
