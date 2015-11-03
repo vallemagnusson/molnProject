@@ -1,13 +1,8 @@
-*.yml
 *.key
 *.key.pub
 ACC-Course-openrc.sh
-workerSetup.py
-userdatafiles
+userdata.yml
+worker_userdata.yml
 setUpServer.py
 *.pyc
-*.png
-
-*.pyc
-
 *.png
